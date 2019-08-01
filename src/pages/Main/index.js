@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Keyboard, ActivityIndicator } from 'react-native';
+import PropTypes from 'prop-types';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -20,6 +21,16 @@ import {
 } from './styles';
 
 export default class Main extends Component {
+  static navigationOptions = {
+    title: 'Usuários',
+  };
+
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func,
+    }).isRequired,
+  };
+
   state = {
     newUser: '',
     users: [],
@@ -27,7 +38,6 @@ export default class Main extends Component {
   };
 
   componentDidMount = async () => {
-    console.tron.log(this.props);
     const users = await AsyncStorage.getItem('users');
 
     if (users) {
@@ -64,7 +74,7 @@ export default class Main extends Component {
         loading: false,
       });
     } catch (e) {
-      console.tron.log(e);
+      this.alert('Tente novamente!');
     } finally {
       Keyboard.dismiss();
     }
@@ -117,7 +127,3 @@ export default class Main extends Component {
     );
   }
 }
-
-Main.navigationOptions = {
-  title: 'Usuários',
-};
