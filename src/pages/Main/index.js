@@ -37,21 +37,21 @@ export default class Main extends Component {
     loading: false,
   };
 
-  componentDidMount = async () => {
+  async componentDidMount() {
     const users = await AsyncStorage.getItem('users');
 
     if (users) {
       this.setState({ users: JSON.parse(users) });
     }
-  };
+  }
 
-  componentDidUpdate = (_, prevState) => {
+  componentDidUpdate(_, prevState) {
     const { users } = this.state;
 
     if (users !== prevState.users) {
       AsyncStorage.setItem('users', JSON.stringify(users));
     }
-  };
+  }
 
   handleAddUser = async () => {
     const { users, newUser } = this.state;
